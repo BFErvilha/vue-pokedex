@@ -1,5 +1,18 @@
 # vue-pokedex
 
+Desafio Criar uma Pokedex Utilizando Vue.js
+
+Utilizado:
+ - Vue 2
+ - [PokeApi](https://pokeapi.co/) - Utilizada para consultar os pokémons
+ - [Vuesax](https://lusaxweb.github.io/vuesax/) - Utilizado como frontend components
+
+# Demo
+
+[Demo Pokédex](https://vue-pokedex-8fy1cs8kp-bfervilha.vercel.app/).
+
+
+
 ## Project setup
 ```
 npm install
