@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Pokemons />
   </div>
 </template>
+
+<script>
+import Pokemons from './components/Pokemons'
+
+export default {
+  name: 'App',
+  components: { Pokemons }
+}
+</script>
 
 <style lang="scss">
 #app {
