@@ -3,8 +3,19 @@
     <vs-tabs class="menu" color="#ffcb05">
       <vs-tab :key="index" v-for="(region, index) in regions" :label="region.name" @click="loadRegion(region)">
         <div>
-          <div v-if="!pokedex">
-            <img src="../assets/img/pokeball.png" width="100" height="100">
+          <div class="intro" v-if="!pokedex">
+            <div class="title">
+              <a href="https://fontmeme.com/pt/fonte-de-pokemon/">
+                <img src="https://fontmeme.com/permalink/210922/03ab396b25c9a7a15a4d33713e13bba9.png" alt="fonte-de-pokemon" border="0">
+              </a>
+            </div>
+            <div class="pokeball">
+              <img src="../assets/img/pokeball.png" width="300" height="300">
+            </div>
+            <div class="author-box">
+                <p>Feito por <span>Bruno Ferreira Ervilha</span></p>
+                <p>Repo: <a href="https://github.com/BFErvilha/vue-pokedex" target="_blank">Vue Pokedex</a></p>
+            </div>
           </div>
 
           <poke-list class="pokemon-list" v-if="pokedex" :pokedex="pokedex" :apiImg="apiImg" :apiUrl="apiUrl"/>
@@ -84,23 +95,49 @@ export default {
         this.$vs.loading({
           type: 'point'
         })
+        this.$vs.loading()
         const res = await axios.get(this.apiUrl + this.dexRange)
-        console.log(res.data)
         this.pokedex = res.data.results
       } catch (error) {
         console.error(error)
       } finally {
-        this.$vs.loading.close()
+        setTimeout(function () {
+          this.$vs.loading.close()
+        }, 5000)
       }
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container{
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}
+
+.intro{
+  margin: 50px auto;
+
+  .title{
+    margin: 0 auto;
+  }
+
+  .pokeball{
+    margin: 30px auto;
+  }
+
+  .author-box{
+    background: white;
+    width: 600px;
+    margin: 0 auto;
+    padding: 15px 0px;
+    border-radius: .375rem;
+
+    p{
+      font-size: 20px;
+    }
+  }
 }
 </style>
