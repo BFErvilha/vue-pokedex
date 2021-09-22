@@ -3,11 +3,9 @@
     <vs-tabs class="menu" color="#ffcb05">
       <vs-tab :key="index" v-for="(region, index) in regions" :label="region.name" @click="loadRegion(region)">
         <div>
-          <div class="intro" v-if="!pokedex">
+          <div class="intro" v-if="!pokedex || region.name == 'Inicio'">
             <div class="title">
-              <a href="https://fontmeme.com/pt/fonte-de-pokemon/">
                 <img src="https://fontmeme.com/permalink/210922/03ab396b25c9a7a15a4d33713e13bba9.png" alt="fonte-de-pokemon" border="0">
-              </a>
             </div>
             <div class="pokeball">
               <img src="../assets/img/pokeball.png" width="300" height="300">
@@ -42,6 +40,7 @@ export default {
       isLoading: false,
       dexRange: '',
       regions: [
+        { name: 'Inicio', dex: '' },
         { name: 'Kanto', dex: '?limit=151' },
         { name: 'Johto', dex: '?offset=151&limit=100' },
         { name: 'Hoenn', dex: '?offset=251&limit=135' },
@@ -55,6 +54,9 @@ export default {
   },
   methods: {
     async loadRegion (region) {
+      if (region.name === 'Inicio') {
+        this.pokedex = null
+      }
       switch (region.name) {
         case 'Kanto':
           this.pokedex = null
@@ -91,19 +93,21 @@ export default {
         default:
           this.dexRange = ''
       }
-      try {
-        this.$vs.loading({
-          type: 'point'
-        })
-        this.$vs.loading()
-        const res = await axios.get(this.apiUrl + this.dexRange)
-        this.pokedex = res.data.results
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setTimeout(function () {
-          this.$vs.loading.close()
-        }, 5000)
+      if (this.dexRange !== '') {
+        try {
+          this.$vs.loading({
+            type: 'point'
+          })
+          this.$vs.loading()
+          const res = await axios.get(this.apiUrl + this.dexRange)
+          this.pokedex = res.data.results
+        } catch (error) {
+          console.error(error)
+        } finally {
+          setTimeout(function () {
+            this.$vs.loading.close()
+          }, 5000)
+        }
       }
     }
   }
